@@ -4,30 +4,31 @@ package main
 import (
     "io"
     "net/http"
+    "github.com/gorilla/mux"
+    "log"
+    "fmt"
 )
 
-func RootCall(w http.ResponseWriter, r *http.Request) {
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
     io.WriteString(w, "API server is running\n")
 }
 
-var mux map[string]func(http.ResponseWriter, *http.Request)
-
-func main() {
-    server := http.Server {
-        Addr: ":8000",
-        Handler: &myHandler{},
-    }
-    mux = make(map[string]func(http.ResponseWriter, *http.Request))
-    mux["/"] = RootCall
-    server.ListenAndServe()
+func GetHandler(w http.ResponseWriter, r *http.Request) {
+   key := mux.Vars(r)["key"]
+   io.WriteString(w, fmt.Sprintf("Need to process key: %s", key))
 }
 
-type myHandler struct{}
+func PostHandler(w http.ResponseWriter, r *http.Request) {
+    key := mux.Vars(r)["key"]
+    value := mux.Vars(r)["value"]
+    io.WriteString(w, fmt.Sprintf("Need to process \n key: %s \n value: %s\n", key, value))
+}
 
-func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
-    if h, ok := mux[r.URL.String()]; ok {
-        h(w, r)
-        return
-    }
-    io.WriteString(w, "Unknown URL call: "+r.URL.String())
+
+func main() {
+    router := mux.NewRouter()
+    router.HandleFunc("/",HomeHandler)
+    router.HandleFunc("/get/{key}",GetHandler)
+    router.HandleFunc("/post/{key}/{value}",PostHandler)
+    log.Fatal(http.ListenAndServe(":8000", router))
 }
