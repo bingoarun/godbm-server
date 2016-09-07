@@ -1,0 +1,15 @@
+{
+    "test": "val",
+    "server": 
+    {
+        "port": "8000",
+        "log_dir": "/var/log/godbm",
+        "storage": "./data/"
+    },
+
+    "search":
+    {
+        "algorithm": " ",
+        "concurrency": " "
+    }
+}

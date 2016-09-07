@@ -14,8 +14,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetHandler(w http.ResponseWriter, r *http.Request) {
-   key := mux.Vars(r)["key"]
-   io.WriteString(w, fmt.Sprintf("Need to process key: %s", key))
+    key := mux.Vars(r)["key"]
+    io.WriteString(w, fmt.Sprintf("Need to process key: %s", key))
 }
 
 func PostHandler(w http.ResponseWriter, r *http.Request) {
