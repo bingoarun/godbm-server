@@ -7,6 +7,7 @@ import (
     "github.com/gorilla/mux"
     "log"
     "fmt"
+    "configreader"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {

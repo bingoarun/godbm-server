@@ -23,10 +23,10 @@ func main() {
     file, err := os.Open("config.json")
     decoder := json.NewDecoder(file)
 
-    var Confobj Configuration
-    if err = decoder.Decode(&Confobj); err != nil{
+    var conf Configuration
+    if err = decoder.Decode(&conf); err != nil{
         fmt.Print(err)
     }
-    fmt.Printf("%+v\n", Confobj.Server.Port)
-    fmt.Printf("%+v\n",Confobj)
+    fmt.Printf("%+v\n", conf.Server.Port)
+    fmt.Printf("%+v\n",conf)
 }
